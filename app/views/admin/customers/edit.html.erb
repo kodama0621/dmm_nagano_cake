@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row my-2">
+   <h3><%= @customer.last_name%><%= @customer.first_name%>さんの会員情報詳細</h3>
+</div>
+   <%= form_for @customer, url:admins_customer_path(@customer.id),method: :patch, html: { class: "pt-4" } do |f| %>
+
+   <div class="row my-2">
+     <div class= "edit-label"><%= f.label(:label, '会員ID') %></div>
+     <div class= "edit-input"><%= @customer.id%></div>
+   </div>
+
+   <div class="row my-2">
+    <div class= "edit-label"><%= f.label :"氏名"%></div>
+    <div class= "edit-input"><%= f.text_field :last_name, autofocus: true, autocomplete: "last_name"%></div>
+    <div class= "edit-input"><%= f.text_field :first_name, autofocus: true, autocomplete: "first_name"%></div>
+  </div>
+
+  <div class="row my-2">
+    <div class= "edit-label"><%= f.label :"フリガナ"%></div>
+    <div class= "edit-input "><%= f.text_field :last_name_kana, autofocus: true, autocomplete: "last_name_kana"%></div>
+    <div class= "edit-input"><%= f.text_field :first_name_kana, autofocus: true, autocomplete: "first_name_kana"%></div>
+  </div>
+
+  <div class="row my-2">
+    <div class= "edit-label"><%= f.label :"郵便番号(ハイフンなし)" %></div>
+    <div class= "edit-input"><%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code" %></div>
+  </div>
+
+  <div class="row my-2">
+    <div class= "edit-label"><%= f.label :"住所" %></div>
+    <div class= "edit-input"><%= f.text_field :address, autofocus: true, autocomplete: "address", :size=>"62" %></div>
+  </div>
+
+  <div class="row my-2">
+    <div class= "edit-label"><%= f.label :"電話番号(ハイフンなし)"%></div>
+    <div class= "edit-input"><%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number" %></div>
+  </div>
+
+  <div class="row my-2">
+    <div class= "edit-label"><%= f.label :"メールアドレス"%></div>
+    <div class= "edit-input"><%= f.email_field :email, autofocus: true, autocomplete: "email"%></div>
+  </div>
+
+  <div class="row my-2">
+    <div class= "edit-label"><%= f.label :"会員ステータス"%></div>
+    <div class= "edit-input">
+      <%= f.radio_button :is_deleted, false %>
+      <%= f.label :is_deleted, "有効", {value: :false, style: "display: inline-block;"} %>
+      <%= f.radio_button :is_deleted, true %>
+     <%= f.label :is_active, "退会", {value: :true, style: "display: inline-block;"} %>
+    </div>
+  </div>
+
+  <div class="actions row py-4">
+    <div class= "edit-label"></div>
+     <div class= "edit-input">
+    <%= f.submit "変更内容を保存", class: "btn btn-success" %>
+      </div>
+  </div>
+<% end %>
+</div>
