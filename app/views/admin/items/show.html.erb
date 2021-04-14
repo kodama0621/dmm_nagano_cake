@@ -1,0 +1,39 @@
+<div class="container mt-5">
+  <div class="row">
+    <h3 class="bg-light mb-5">商品詳細</h3>
+  </div>
+ <div class="row">
+  <div class="col-md-5">
+   <%= attachment_image_tag @item, :image, size: "300x300", format: 'jpg', fallback: "no-image.jpg" %>
+  </div>
+  <div class="col-md-6 mt-5 ml-4">
+   <div>
+    <label>商品名：</label>
+    <%= @item.name %>
+   </div>
+   <div>
+    <label>商品説明：</label>
+    <%= @item.introduction %>
+   </div>
+   <div>
+    <label>ジャンル：</label>
+    <%= @item.genre.name %>
+   </div>
+   <div>
+    <label>価格（税込価格）：</label>
+    <%= @item.price.to_s(:delimited) %>(<%= (((@item.price*1.1).round(2)).ceil).to_s(:delimited) %>)円
+   </div>
+   <div>
+    <label>販売ステータス：</label>
+    <% if @item.is_active == true %>
+      <i class="fas fa-bullseye red"></i>販売中
+    <% elsif @item.is_active == false %>
+      <i class="fas fa-bullseye blue"></i>販売停止中
+    <% end %>
+   </div>
+   <div class="mt-5">
+    <%= link_to "編集する", edit_admins_item_path(@item), class: "btn btn-success" %>
+   </div>
+  </div>
+ </div>
+</div>

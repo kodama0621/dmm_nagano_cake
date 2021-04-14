@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  get 'admins/search/search'
-  get 'admins/homes/top' => 'admins/homes#top'
+
+
+  namespace :admin do
+    get 'genres/edit'
+    get 'genres/index'
+    get 'genres/show'
+  end
   devise_for :admins, controllers: {
     sessions: 'admin_devises/sessions',
     passwords: 'admin_devises/passwords',
