@@ -18,9 +18,9 @@ end
     # customers_products_path
     case resource
     when Admin
-      admins_products_path
+      admins_items_path
     when Customer
-      customers_products_path
+      customers_items_path
     end
   end
 

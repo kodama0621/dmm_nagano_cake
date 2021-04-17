@@ -1,0 +1,57 @@
+<div class="container">
+  <h3>注文情報確認</h3>
+    <div class="row">
+      <div style="width: 80%" class="pr-4">
+      	<table class="table table-bordered">
+      	  <thead>
+              <tr>
+                <th>商品名</th>
+                <th>単価（税込）</th>
+                <th>数量</th>
+                <th>小計</th>
+              </tr>
+             </thead>
+             <tbody>
+             	<% @cart_items.each do |cart_item| %>
+             	<tr>
+             	<td><%= attachment_image_tag cart_item.item, :image, :fill, 50, 50, format: "jpg", fallback: "no-image.jpg", size: "50x50" %>
+             	    <%= cart_item.item.name %>
+             	</td>
+             	<td><%= (((cart_item.item.price*1.1).round(2)).ceil).to_s(:delimited) %></td>
+             	<td><%= cart_item.quantity %></td>
+             	<td><%= ((((cart_item.item.price*1.1)*cart_item.quantity).round(2)).ceil).to_s(:delimited) %></td>
+             	</tr>
+             	<% end %>
+             </tbody>
+      	</table>
+    	</div>
+    	<div style="width: 20%" class="pl-4">
+      	<table class="table table-bordered">
+      	  <tr><th>送料</th><td>800</td></tr>
+          <tr><th>商品合計</th><td><%= ((@total_price.round(2)).ceil).to_s(:delimited) %></td></tr>
+          <tr><th>請求金額</th><td><%= (((800 + @total_price).round(2)).ceil).to_s(:delimited) %></td></tr>
+      	</table>
+    	</div>
+	</div>
+	    	<div class="row">
+    	    <h5>支払方法</h5>
+    	    <div>
+    	      <p class="ml-3"><%= @order.method_of_payment  %></p>
+    	    </div>
+    	  </div>
+    	  <div class="row">
+    	    <h5>お届け先</h5>
+    	    <div class="ml-3">
+    	      <%= @order.full_address %><br><%= @order.shipping_name %>
+    	    </div>
+    	  </div>
+    	  <div class="row">
+    	    <%= form_with model: @order, url: customers_orders_path, method: :post, local: true do |f| %>
+    	      <%= f.hidden_field :shipping_street_adress, value: @order.shipping_street_adress %>
+    	      <%= f.hidden_field :shipping_postal_code, value: @order.shipping_postal_code %>
+    	      <%= f.hidden_field :method_of_payment, value: @order.method_of_payment %>
+    	      <%= f.hidden_field :shipping_name, value: @order.shipping_name %>
+    	      <%= f.submit "注文を確定する", class: "btn btn-success mt-5" %>
+    	    <% end %>
+    	  </div>
+</div>

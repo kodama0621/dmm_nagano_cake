@@ -1,0 +1,65 @@
+<div class="container">
+  <h3>注文情報入力</h3>
+<div class="row">
+  <div class="col-xs-12 mt-3">
+    <% if current_customer.cart_items.present? %>
+    <div>
+      <%= form_with model: @order, url: customers_order_comfirm_path, local: true do |f| %>
+        <%= render "shared/error_messages", resource: @order %>
+        <h5 style="font-weight:bold">支払い方法</h5>
+          <div>
+            <%= f.radio_button :method_of_payment, :"クレジットカード", checked: true %>
+            <span>クレジットカード</span>
+          </div>
+          <div>
+            <%= f.radio_button :method_of_payment, :"銀行振込" %>
+            <span>銀行振込</span>
+          </div>
+
+        <h5 style="font-weight:bold", class="mt-3">お届け先</h5>
+          <div>
+            <%= radio_button_tag :address, "address", checked: true %>
+            <span>ご自身の住所</span><br>
+            〒<%= "#{current_customer.postal_code} #{current_customer.address}" %><br>
+            <%= "#{current_customer.last_name} #{current_customer.first_name}" %>
+          </div>
+          <div style="display:block", class="mt-2">
+          <% if @shippings != [] %>
+           <%= radio_button_tag :address, "shipping_address" %>
+           <span>登録済住所から選択</span><br>
+           </div>
+            <div>
+            <%= collection_select(:shipping, :shipping_id, @shippings, :id, :address, prompt: "-- 選択してください --") %>
+          </div>
+         <% end %>
+          <div class="mt-3">
+            <%= radio_button_tag :address, "new_address" %>
+            <span>新しいお届け先</span><br>
+            <div class="row my-2">
+              <div class= "shipping-new-label ml-3"><%= f.label :"郵便番号(ハイフンなし)" %></div>
+              <div class= "shipping-new-label"><%= f.text_field :shipping_postal_code %></div>
+            </div>
+            <div class="row my-2">
+              <div class= "shipping-new-label ml-3"><%= f.label :"住所" %></div>
+              <div class= "shipping-new-label"><%= f.text_field :shipping_street_adress, :size => "62" %></div>
+            </div>
+            <div class="row my-2">
+              <div class= "shipping-new-label ml-3"><%= f.label :"宛名" %></div>
+              <div class= "shipping-new-label"><%= f.text_field :shipping_name %></div>
+            </div>
+          </div>
+
+          <div>
+            <%= f.submit "確認画面へ進む", class: "btn btn-primary" %>
+          </div>
+      <% end %>
+    </div>
+
+<% else %>
+      <p>お客様のカートに商品はありません。</p>
+      <p><%= link_to "商品一覧", customers_products_path, class: "btn btn-warning" %>から商品をお探し下さい。</p>
+<% end %>
+
+  </div>
+</div>
+</div>

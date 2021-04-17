@@ -1,0 +1,27 @@
+<div class="container m-5">
+  <%= render "shared/error_messages", resource: @cart_item %>
+ <div class="row make align-items-center justify-content-center">
+  <div class="col-5 text-center">
+  <%= attachment_image_tag @item, :image, :fill, 100, 100, format: 'jpeg', size: '160x160', fallback: "no-image.jpg" %>
+  </div>
+  <div class="item_info col-4">
+    <h3><%= @item.name %></h3>
+    <h4><%= @item.introduction %></h4>
+    <label for="inputTaxoutprice"></label>
+    <h4>価格：￥ <%= (((@item.price*1.1).round(2)).ceil).to_s(:delimited) %>(税込)</h4>
+    <% if @item.is_active == true %>
+      <% if @item.genre.is_active == true %>
+        <%= form_for(@cart_item , url: customers_cart_items_path, method: :post) do |f| %>
+          <%= f.hidden_field :product_id, value: @item.id %>
+          <%= f.select :quantity, options_for_select((1..10).to_a), include_blank: "個数選択" %>
+          <%= f.submit "カートに入れる", class: "glyphicon glyphicon-shopping-cart btn btn-primary" %>
+        <% end %>
+      <% else %>
+      <h3>売り切れ中</h3>
+      <% end %>
+    <% elsif @item.is_active == false %>
+      <h3>売り切れ中</h3>
+    <% end %>
+  </div>
+ </div>
+</div>

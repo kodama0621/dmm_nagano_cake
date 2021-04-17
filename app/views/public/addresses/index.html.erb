@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-5">
+      <h3 class="text-center bg-light"><strong>配送先登録/一覧</strong></h3>
+    </div>
+  </div>
+
+  <div class="row make">
+    <%= form_for @shipping, url: customers_shippings_path, method: :post, html: { class: "pt-4" } do |f| %>
+    <%= render "shared/error_messages", resource: @shipping %>
+      <div class="col-12">
+        <table class="table table-borderless">
+          <tr>
+            <th>郵便番号(ハイフンなし)</th>
+            <td><%= f.text_field :postal_code %></td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td><%= f.text_field :address %></td>
+          </tr>
+          <tr>
+            <th>宛名</th>
+            <td><%= f.text_field :name %></td>
+            <td><%= f.submit "新規登録", class:"btn btn-success" %></td>
+          </tr>
+        </table>
+      </div>
+    <% end %>
+  </div>
+
+    <div class="row make">
+      <div class="col-10">
+        <table class="table table-bordered">
+          <thead class="bg-light">
+            <tr>
+              <th class="title">郵便番号</th>
+              <th>住所</th>
+              <th>宛名</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @shippings.each do |shipping| %>
+            <tr>
+              <td><%= shipping.postal_code %></td>
+              <td><%= shipping.address %></td>
+              <td><%= shipping.name %></td>
+              <td>
+                <%=link_to "編集する", edit_customers_shipping_path(shipping.id), class:"btn btn-success btn-sm" %>
+                &ensp;
+                <%=link_to "削除する", customers_shipping_path(shipping.id), method: :delete, class:"btn btn-danger btn-sm" %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
