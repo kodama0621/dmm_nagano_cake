@@ -16,3 +16,92 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+
+.sing-up-label {
+  width: 200px;
+}
+
+.sign-up-input-label {
+  width: 64px;
+}
+
+.sing-in-label {
+  width: 200px;
+}
+
+.new_customer {
+  display: flex;
+  justify-content: center;
+}
+
+.home_text {
+ padding: 80px 0px;
+ color: black;
+}
+
+li {
+ margin-right: 50px;
+}
+
+.table {
+  margin-top: 30px;
+}
+
+.paginate {
+  margin-left: 462px;
+}
+
+.user-table {
+  width: 400px;
+}
+
+.edit-label {
+  width: 200px;
+}
+
+.edit-input {
+  margin-left: 50px;
+}
+
+.addresse-new-label {
+  width: 200px;
+}
+
+.addresse-new-input {
+  margin-left: 50px;
+}
+
+.addresse-edit-label {
+  width: 200px;
+}
+
+.addresse-edit-input {
+  margin-left: 50px;
+}
+
+.addresse-table {
+  table-layout: fixed;
+}
+
+.addresse-table-postal-code {
+  width: 100px;
+}
+
+.addresse-table-address {
+}
+
+.addresse-table-name {
+  width: 160px;
+}
+
+.addresse-table-button {
+  width: 220px;
+}
+
+.new_item {
+  margin: 50px;
+}
+
+.my-page-label {
+  width: 140px;
+}

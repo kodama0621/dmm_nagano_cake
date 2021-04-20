@@ -1,45 +1,28 @@
 class Admin::OrdersController < ApplicationController
+  before_action :authenticate_admin!
+
   def index
-  if params[:id].nil?
-   @orders = Order.all.page(params[:page]).per(10)
-  else
-   @orders = Order.where(customer_id: params[:id]).page(params[:page]).per(10)
+    @orders = Order.all
   end
- end
 
- def current_index
-  if params[:id].nil?
-   @orders = Order.all.page(params[:page]).per(10)
-  else
-   @orders = Order.where(customer_id: params[:id]).page(params[:page]).per(10)
+  def show
+    @order = Order.find(params[:id])
   end
- end
 
- def today_order_index
-  now = Time.current
-  @orders = Order.where(created_at: now.all_day)
-  render :index
- end
-
-	def show
-	  @order = Order.find(params[:id])
-    @order_items = OrderItem.where(order_id: @order.id)
-    total_price = 0
-    for cart_item in @order_items do
-      item = cart_item.item
-      total_price += (item.price*1.1) * cart_item.quantity
+  def updatepara
+    @order = Order.find(params[:id])
+    @order.update(order_params)
+    if params[:order][:order_status] = "1"
+      @order.order_details.each do |order_detail|
+        order_detail.update(production_status: 1)
+      end
     end
-    @total_price = total_price
-	end
+    flash[:success] = "注文ステータスを更新しました"
+    redirect_to admin_order_path(@order)
+  end
 
-	def update
-		@order = Order.find(params[:id])
-		@order.update(order_params)
-		redirect_to admin_order_path(@order)
-	end
-
-	private
-	def order_params
-		  params.require(:order).permit(:status)
-	end
+  private
+  def order_params
+    params.require(:order).permit(:order_status)
+  end
 end

@@ -1,27 +1,51 @@
-<div class="container m-5">
-  <%= render "shared/error_messages", resource: @cart_item %>
- <div class="row make align-items-center justify-content-center">
-  <div class="col-5 text-center">
-  <%= attachment_image_tag @item, :image, :fill, 100, 100, format: 'jpeg', size: '160x160', fallback: "no-image.jpg" %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 text-right mb-4">
+      <h3>商品詳細</h3>
+    </div>
   </div>
-  <div class="item_info col-4">
-    <h3><%= @item.name %></h3>
-    <h4><%= @item.introduction %></h4>
-    <label for="inputTaxoutprice"></label>
-    <h4>価格：￥ <%= (((@item.price*1.1).round(2)).ceil).to_s(:delimited) %>(税込)</h4>
-    <% if @item.is_active == true %>
-      <% if @item.genre.is_active == true %>
-        <%= form_for(@cart_item , url: customers_cart_items_path, method: :post) do |f| %>
-          <%= f.hidden_field :product_id, value: @item.id %>
-          <%= f.select :quantity, options_for_select((1..10).to_a), include_blank: "個数選択" %>
-          <%= f.submit "カートに入れる", class: "glyphicon glyphicon-shopping-cart btn btn-primary" %>
-        <% end %>
-      <% else %>
-      <h3>売り切れ中</h3>
-      <% end %>
-    <% elsif @item.is_active == false %>
-      <h3>売り切れ中</h3>
-    <% end %>
+  <div class="row mt3">
+    <div class="col-md-4 text-right">
+      <%= attachment_image_tag @item, :image, fallback: "no-image.png", size: "200x200" %>
+    </div>
+    <div class="col-md-8">
+      <table class= "table">
+        <tr>
+          <th>商品名</th>
+          <td><%= @item.name %></td>
+        </tr>
+        <tr>
+          <th>商品説明</th>
+          <td><%= @item.introduction %></td>
+        </tr>
+        <tr>
+          <th>ジャンル</th>
+          <td><%= @item.genre.name %></td>
+        </tr>
+        <tr>
+          <th>税込価格</th>
+          <td><%= @item.price %>円</td>
+        </tr>
+        <tr>
+          <th>ジャンル</th>
+          <% if @item.is_active == false %>
+            <td>販売停止中</td>
+          <% else %>
+             <td class= "text-success">販売中</td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
   </div>
- </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-4 text-center">
+     <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
+       <%= f.hidden_field :item_id, value: @item.id %>
+       <div class= "form-inline">
+         <%= f.select :amount, [1,2,3,4,5,6,7,8,9,10], { include_blank: '個数選択'}, {class: "form-control w-25 mr-5"}%>
+         <%= f.submit :"カートに入れる", class: "btn btn-success" %>
+       </div>
+     <% end %>
+    </div>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 class Public::HomesController < ApplicationController
-  def home
-  @items = Item.page(params[:page]).reverse_order.per(4)
+  def top
+    @items = Item.page(params[:page]).reverse_order.per(4)
   end
 
   def about

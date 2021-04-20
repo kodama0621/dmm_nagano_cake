@@ -1,8 +1,8 @@
 class Item < ApplicationRecord
   belongs_to :genre
 	has_many :cart_items
-	has_many :orders, through: :order_products
-	has_many :order_products
+	has_many :orders, through: :order_items
+	has_many :order_items
 
 	attachment :image
 

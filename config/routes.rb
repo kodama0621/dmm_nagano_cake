@@ -1,39 +1,50 @@
 Rails.application.routes.draw do
-  get 'admin/search/search'
-  root to: 'public/homes#home'
-  get 'home/about' => 'public/homes#about'
-  get 'public/unsubscribe' => 'public/customers#unsubscribe'
-  patch 'public/withdraw/:id' => 'public/customers#withdraw' ,as:'publics_withdraw'
-  delete 'cart_items/destroy_all' => 'public/cart_items#destroy_all'
-  post 'public/orders/comfirm' => 'public/orders#comfirm',as:'publics_order_comfirm'
-  get 'public/orders/complete' => 'public/orders#complete',as:'publics_order_complete'
-  get 'admin/homes/top' => 'admin/homes#top'
-  patch 'admin/order_details/:id' => 'admin/order_items#update',as:'order_items'
-
-  devise_for :customers, controllers: {
-    sessions:      'public_devises/sessions',
-    passwords:     'public_devises/passwords',
-    registrations: 'public_devises/registrations'
-  }
-  namespace :public do
-    resources :customers, :only => [:show, :edit,:update]
-    resources :items, :only => [:show,:index]
-    resources :cart_items, :only => [:index, :update, :create, :destroy] do
-      delete "all_destroy"
-  end
-    resources :orders ,:only => [:index,:show,:new,:create]
-    resources :addresses, :only => [:index,:edit,:create,:update,:destroy]
-  end
-
+  root :to => 'public/homes#top'
+  get 'admin' => 'admin/homes#top'
+  get 'about' => 'public/homes#about'
   devise_for :admins, controllers: {
     sessions:      'admin_devises/sessions',
     passwords:     'admin_devises/passwords',
     registrations: 'admin_devises/registrations'
   }
+
+   devise_for :customers, controllers: {
+    sessions:      'customers/sessions',
+    passwords:     'customers/passwords',
+    registrations: 'customers/registrations'
+  }
+
   namespace :admin do
-    resources :items, :only => [:index,:show,:new,:create,:edit,:update]
-    resources :genres, :only => [:index,:create,:edit,:show,:update]
-    resources :customers, :only => [:index,:show,:edit,:update]
-    resources :orders, :only => [:show,:update]
+    resources :items, only: [:index, :new, :create, :show, :edit, :update]
+    resources :customers, only: [:index, :show, :edit, :update] do
+      member do
+        get 'customer_orders'
+      end
+    end
+    resources :genres, only: [:index, :create, :edit, :update]
+    resources :orders, only: [:index, :show, :update]
+    resources :order_details, only: [:update]
+  end
+
+  scope module: :customer do
+    resources :customers, only: [:show, :edit, :update] do
+      collection do
+        get 'quit'
+        patch 'withdraw'
+      end
+    end
+    resources :items, only: [:index, :show]
+    resources :orders, only: [:index, :show, :new, :create] do
+      collection do
+        post 'confirm'
+        get 'complete'
+      end
+    end
+    resources :cart_items, only: [:index, :update, :create, :destroy] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
+    resources :addresses, only: [:index, :edit, :create, :update, :destroy]
   end
 end

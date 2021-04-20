@@ -1,44 +1,40 @@
 class Admin::ItemsController < ApplicationController
   before_action :authenticate_admin!
 
-  def index
-   @items = Items.page(params[:page]).per(10)
-  end
-
-  def show
-    @items = Items.find(params[:id])
-  end
-
   def new
-   @items = Items.new
-   @genres = Genre.where(is_active: true)
+    @item = Item.new
+    @genres = Genre.all
+  end
+
+  def index
+    @items = Item.search(params[:search])
   end
 
   def create
-    @items = Items.new(item_params)
-    if @items.save
-      redirect_to admin_items_path
-    else
-      @genres = Genre.where(is_active: true)
-      render :new
-    end
+    @item = Item.new(item_params)
+    @item.save
+    redirect_to admin_item_path(@item)
+  end
+
+  def show
+    @item = Item.find(params[:id])
   end
 
   def edit
-   @items = Items.find(params[:id])
-   @genres = Genre.where(is_active: true)
+    @item = Item.find(params[:id])
+    @genres = Genre.all
   end
 
   def update
-    @items = Items.find(params[:id])
-    if @items.update(item_params)
-    redirect_to admin_items_path(@item)
-    end
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    flash[:success] = "商品情報を変更しました"
+    redirect_to admin_item_path(@item)
   end
 
-    private
+  private
   def item_params
-    params.require(:item).permit(:name, :introduction, :price, :genre_id, :image, :is_active)
+    params.require(:item).permit(:genre_id, :name, :explanation, :image, :price, :is_active)
   end
 
 end
