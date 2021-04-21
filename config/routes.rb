@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root :to => 'customer/homes#top'
+  root to: 'customer/homes#top'
   get 'admin' => 'admin/homes#top'
   get 'about' => 'customer/homes#about'
 
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
+    
     resources :items, only: [:index, :new, :create, :show, :edit, :update]
     resources :customers, only: [:index, :show, :edit, :update] do
       member do

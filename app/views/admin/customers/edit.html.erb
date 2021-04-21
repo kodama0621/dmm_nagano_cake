@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-7">
-      <h3 class= "mb-5"><%= "#{@customer.first_name}#{@customer.last_name}さんの会員情報編集" %></h3>
+      <h3 class= "mb-5"><%= "#{@customer.last_name}#{@customer.first_name}さんの会員情報編集" %></h3>
       <%= form_for @customer, url: admin_customer_path, method: :patch do |f| %>
         <table class= "table table-borderless">
           <tr>
@@ -12,8 +12,8 @@
             <th>氏名</th>
             <td>
               <div class="form-inline">
-                <%= f.text_field :first_name, class: "form-control" %>
                 <%= f.text_field :last_name, class: "form-control" %>
+                <%= f.text_field :first_name, class: "form-control" %>
               </div>
             </td>
           </tr>
@@ -21,8 +21,8 @@
             <th>フリガナ</th>
             <td>
               <div class="form-inline">
-                <%= f.text_field :kana_first_name, class: "form-control" %>
-                <%= f.text_field :kana_last_name, class: "form-control" %>
+                <%= f.text_field :last_name_kana, class: "form-control" %>
+                <%= f.text_field :first_name_kana, class: "form-control" %>
               </div>
             </td>
           </tr>
@@ -45,10 +45,10 @@
           <tr>
             <th>会員ステータス</th>
             <td>
-              <%= f.radio_button :is_vaild, false, checked: true %>
-              <%= f.label :is_vaild_false, "有効" %>
-              <%= f.radio_button :is_vaild, true, checked: false %>
-              <%= f.label :is_vaild_true, "退会" %>
+              <%= f.radio_button :is_deleted, false %>
+              <%= f.label :is_deleted, "有効", {value: :false, style: "display: inline-block;"} %>
+              <%= f.radio_button :is_deleted, true %>
+              <%= f.label :is_active, "退会", {value: :true, style: "display: inline-block;"} %>
             </td>
           </tr>
           <tr>

@@ -34,8 +34,8 @@ class DeviseCreateCustomers < ActiveRecord::Migration[5.2]
 
       t.string :last_name
       t.string :first_name
-      t.string :kana_last_name
-      t.string :kana_first_name
+      t.string :last_name_kana
+      t.string :first_name_kana
       t.string :postal_code
       t.string :address
       t.string :phone_number
