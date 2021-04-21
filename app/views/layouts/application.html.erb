@@ -48,19 +48,6 @@
     <% flash.each do |key, value| %>
       <p class = "alert alert-primary pt-2 pb-2 mb-0 w-auto"><%= value %><p>
     <% end %>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 offset-md-8 d-flex justify-content-end">
-          <form class="form-inline my-2 my-lg-0 pr-2">
-            <%= form_tag admin_items_path, :method => 'get' do %> <%# projects_pathはモデル名で読みかえること %>
-            <p class= "search mb-0">
-              <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "商品検索" %>
-              <%= submit_tag "Search", class: "btn btn-outline-success my-2", :name => nil %>
-            </p>
-          <% end %>
-        </div>
-      </div>
-    </div>
 
     <%= yield %>
 

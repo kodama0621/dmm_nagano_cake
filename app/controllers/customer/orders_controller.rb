@@ -1,4 +1,4 @@
-class Public::OrdersController < ApplicationController
+class Customer::OrdersController < ApplicationController
   before_action :authenticate_end_user!
   before_action :check_cart_item, except: :complete
 

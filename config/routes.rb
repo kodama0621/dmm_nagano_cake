@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  root :to => 'public/homes#top'
+  root :to => 'customer/homes#top'
   get 'admin' => 'admin/homes#top'
-  get 'about' => 'public/homes#about'
+  get 'about' => 'customer/homes#about'
+
   devise_for :admins, controllers: {
     sessions:      'admin_devises/sessions',
     passwords:     'admin_devises/passwords',

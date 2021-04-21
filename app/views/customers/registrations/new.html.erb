@@ -2,7 +2,7 @@
 <h3>新規登録画面</h3>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "pt-4" }) do |f| %>
-  <%= render "public_devises/shared/error_messages", resource: resource %>
+  <%= render "customers/shared/error_messages", resource: resource %>
 
   <div class="row my-2">
     <div class= "sing-up-label"><%= f.label :"名前"%></div>

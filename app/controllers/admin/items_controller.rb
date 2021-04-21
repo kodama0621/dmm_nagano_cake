@@ -7,13 +7,13 @@ class Admin::ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.search(params[:search])
+    @items = Item.page(params[:page]).per(10)
   end
 
   def create
-    @item = Item.new(item_params)
-    @item.save
-    redirect_to admin_item_path(@item)
+    item = Item.new(item_params)
+    item.save
+    redirect_to admin_item_path(item.id)
   end
 
   def show
@@ -26,10 +26,10 @@ class Admin::ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
-    @item.update(item_params)
+    item = Item.find(params[:id])
+    item.update(item_params)
     flash[:success] = "商品情報を変更しました"
-    redirect_to admin_item_path(@item)
+    redirect_to admin_item_path(item.id)
   end
 
   private
