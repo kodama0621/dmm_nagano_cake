@@ -48,10 +48,10 @@
           <th><%= f.label :"販売ステータス", class: "mr-5" %></th>
           <td>
             <div class="form-group">
-              <%= f.radio_button :is_active, false, checked: true %>
-              <%= f.label :is_active_false, "販売中" %>
-              <%= f.radio_button :is_active, true, checked: false %>
-              <%= f.label :is_active_true, "販売停止中" %>
+               <%= f.radio_button :is_active, true %>
+               <%= f.label :is_active, "販売中", {value: :true, style: "display: inline-block;"} %>
+               <%= f.radio_button :is_active, false %>
+               <%= f.label :is_active, "販売停止中", {value: :false, style: "display: inline-block;"} %>
             </div>
           </td>
         </tr>

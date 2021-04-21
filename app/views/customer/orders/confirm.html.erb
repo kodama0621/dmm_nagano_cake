@@ -41,7 +41,7 @@
       <table class= "table table-bordered">
         <tr>
           <th class= "table-active">送料</th>
-          <td>¥<%= @order.postage %></td>
+          <td>¥<%= @order.shoping_cost %></td>
         </tr>
         <tr>
           <th class= "table-active">商品合計</th>
@@ -53,7 +53,7 @@
         </tr>
         <tr>
           <th class= "table-active">ご請求金額</th>
-          <td>¥<%= (@order.total_price + @order.postage).to_s(:delimited)  %></td>
+          <td>¥<%= (@order.total_price + @order.shoping_cost).to_s(:delimited)  %></td>
         </tr>
       </table>
     </div>

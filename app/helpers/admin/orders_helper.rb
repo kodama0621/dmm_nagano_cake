@@ -19,6 +19,6 @@ module Admin::OrdersHelper
 
   # 請求合計金額の計算（注文履歴詳細画面）
   def billing_admin(order)
-    total_price(order.order_details) + order.postage
+    total_price(order.order_details) + order.shoping_cost
   end
 end

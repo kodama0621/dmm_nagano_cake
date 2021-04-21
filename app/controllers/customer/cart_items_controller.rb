@@ -36,7 +36,7 @@ class Customer::CartItemsController < ApplicationController
   end
 
   def destroy_all
-    @cart_items = current_end_user.cart_items
+    @cart_items = current_customer.cart_items
     @cart_items.destroy_all
     flash[:success] = "カート内のすべての商品を削除しました"
     redirect_to cart_items_path

@@ -19,11 +19,11 @@ module Public::OrdersHelper
 
   # 請求金額の計算
   def billing(order)
-    total_price(current_customer.cart_items) + order.postage
+    total_payment(current_customer.cart_items) + order.shoping_cost
   end
 
   # 請求合計金額の計算（注文履歴）
   def billing_customer(order)
-    total_price(order.order_details) + order.postage
+    total_price(order.order_details) + order.shoping_cost
   end
 end

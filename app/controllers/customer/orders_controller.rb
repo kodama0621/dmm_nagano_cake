@@ -1,10 +1,10 @@
 class Customer::OrdersController < ApplicationController
-  before_action :authenticate_end_user!
+  before_action :authenticate_customer!
   before_action :check_cart_item, except: :complete
 
   def new
     @order = Order.new
-    @addresses = Address.where(customer_id: current_customer.id)
+    @addresses = Addresse.where(customer_id: current_customer.id)
   end
 
   def confirm
@@ -17,23 +17,19 @@ class Customer::OrdersController < ApplicationController
     if params[:order][:address_option] == "0"
       @order.postal_code = current_customer.postal_code
       @order.address = current_customer.address
-      @order.name = current_customer.first_name + current_customer.last_name
-      if params[:point] == "true"
-        @order.total_price = total_price(@cart_items) - @order.customer.point
-      elsif
-        @order.total_price = total_price(@cart_items)
-      end
+      @order.name = current_customer.last_name + current_customer.first_name
+
     elsif params[:order][:address_option] == "1"
       @ship = Address.find(params[:order][:address_id])
       @order.postal_code = @ship.postal_code
       @order.address = @ship.address
       @order.name = @ship.name
-      @order.total_price = total_price(@cart_items)
+
     elsif params[:order][:address_option] = "2"
       @order.postal_code = params[:order][:postal_code]
       @order.address = params[:order][:address]
       @order.name = params[:order][:name]
-      @order.total_price = total_price(@cart_items)
+
     end
   end
 
@@ -41,7 +37,7 @@ class Customer::OrdersController < ApplicationController
     @order = current_customer.orders.new(order_params)
     @order.save
     @cart_items = current_customer.cart_items
-    if @order.total_price != total_price(@cart_items)
+    if @order.total_payment != total_payment(@cart_items)
       current_customer.update(point: 0)
     end
 
